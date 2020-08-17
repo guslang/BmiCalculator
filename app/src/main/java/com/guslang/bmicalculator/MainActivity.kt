@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity() {
         mAdView = findViewById(R.id.ad_view)
         val adRequest = AdRequest.Builder().build()
         mAdView.loadAd(adRequest)
-
 //        mAdView.adListener = object: AdListener() {
 //            override fun onAdLoaded() {
 //                // Code to be executed when an ad finishes loading.
