@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "373077751783",
+    "firebase_url": "https://guslang-fbcb9.firebaseio.com",
+    "project_id": "guslang-fbcb9",
+    "storage_bucket": "guslang-fbcb9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:373077751783:android:255e0dc5c718dfba206f42",
+        "android_client_info": {
+          "package_name": "com.guslang.bmicalculator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "373077751783-v564fia22bq88o5l12o9qofl2he3kl3j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACk59QRDY_1oJQgjxYR00g8xLL6rCA0jA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "373077751783-v564fia22bq88o5l12o9qofl2he3kl3j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
