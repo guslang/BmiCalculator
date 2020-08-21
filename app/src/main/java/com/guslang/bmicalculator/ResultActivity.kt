@@ -1,16 +1,37 @@
 package com.guslang.bmicalculator
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.InterstitialAd
+import com.google.android.gms.ads.MobileAds
 import kotlinx.android.synthetic.main.activity_result.*
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.startActivity
 import java.math.BigDecimal
 
 class ResultActivity : AppCompatActivity() {
+    lateinit var mAdView : AdView
+    private lateinit var mInterstitialAd: InterstitialAd
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_result)
+
+        //firebase-admob 초기화
+        MobileAds.initialize(this,"@string/admob_app_id")
+        //firebase-admob 배너
+        mAdView = findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
+
+        //firebase-admob 전면 광고
+        mInterstitialAd = InterstitialAd(this)
+        mInterstitialAd.adUnitId = "@string/Interstitial_ad_unit_id"
+        mInterstitialAd.loadAd(AdRequest.Builder().build())
+        //end
 
         // 전달받은 키와 몸무게
         val height = intent.getStringExtra("height").toString().toInt()
@@ -45,6 +66,13 @@ class ResultActivity : AppCompatActivity() {
                 resultTextView.text = "NORMAL RANGE" //정상
                 commentTextView.text = "You have a normal body weight. Great job!"
                 // 정상 체중입니다. Good Job!
+                // admob 전면 광고
+                if (mInterstitialAd.isLoaded) {
+                    mInterstitialAd.show()
+                } else {
+                    Log.d("TAG", "The interstitial wasn't loaded yet.")
+                }
+
             }
             else -> {
                 resultTextView.text = "UNDERWEIGHT" //저체중
@@ -68,9 +96,6 @@ class ResultActivity : AppCompatActivity() {
                     R.drawable.ic_baseline_sentiment_dissatisfied_24)
         }
 
-
-//        Toast.makeText(this, "$bmi",Toast.LENGTH_SHORT).show()
-//        toast("$bmi")
         longToast("$bmi")
         txtResult.text = bmi.toString().toBigDecimal().setScale(2,BigDecimal.ROUND_HALF_UP).toString()
 

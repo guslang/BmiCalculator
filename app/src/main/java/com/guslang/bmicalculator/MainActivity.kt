@@ -2,9 +2,11 @@ package com.guslang.bmicalculator
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.longToast
@@ -13,44 +15,26 @@ import org.jetbrains.anko.startActivity
 class MainActivity : AppCompatActivity() {
 
     lateinit var mAdView : AdView
+    private lateinit var mInterstitialAd: InterstitialAd
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Google Admob
-//        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713")
-        MobileAds.initialize(this) {}
-        mAdView = findViewById(R.id.ad_view)
+        //admob 초기화
+        //MobileAds.initialize(this) {}
+
+        //firebase-admob 초기화
+        MobileAds.initialize(this,"@string/admob_app_id")
+        //firebase-admob 배너
+        mAdView = findViewById(R.id.adView)
         val adRequest = AdRequest.Builder().build()
         mAdView.loadAd(adRequest)
-//        mAdView.adListener = object: AdListener() {
-//            override fun onAdLoaded() {
-//                // Code to be executed when an ad finishes loading.
-//            }
-//
-////            override fun onAdFailedToLoad(adError : LoadAdError) {
-////                // Code to be executed when an ad request fails.
-////            }
-//
-//            override fun onAdOpened() {
-//                // Code to be executed when an ad opens an overlay that
-//                // covers the screen.
-//            }
-//
-//            override fun onAdClicked() {
-//                // Code to be executed when the user clicks on an ad.
-//            }
-//
-//            override fun onAdLeftApplication() {
-//                // Code to be executed when the user has left the app.
-//            }
-//
-//            override fun onAdClosed() {
-//                // Code to be executed when the user is about to return
-//                // to the app after tapping on an ad.
-//            }
-//        }
-//        val adSize = AdSize(300, 50)
+
+        //firebase-admob 전면 광고
+        mInterstitialAd = InterstitialAd(this)
+        mInterstitialAd.adUnitId = "@string/Interstitial_ad_unit_id"
+        mInterstitialAd.loadAd(AdRequest.Builder().build())
+        //end
 
         // 이전에 입력한 값을 읽어오기
         loadData()
@@ -60,10 +44,13 @@ class MainActivity : AppCompatActivity() {
 
         // BMI 계산
         resultButton.setOnClickListener {
-//            val intent = Intent(this, ResultActivity::class.java)
-//            intent.putExtra("weight",weightEditText.text.toString())
-//            intent.putExtra("height",heightEditText.text.toString())
-//            startActivity(intent)
+
+            // admob 전면 광고
+            if (mInterstitialAd.isLoaded) {
+                mInterstitialAd.show()
+            } else {
+                Log.d("TAG", "The interstitial wasn't loaded yet.")
+            }
 
             var heightval = heightEditText.text.toString()
             if (heightval.isEmpty())  heightval = "0"
