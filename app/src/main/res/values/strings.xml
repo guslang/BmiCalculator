@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">BMI Calculator</string>
+    <string name="app_name">Lotto \u0026 BMI</string>
     <string name="admob_app_id">ca-app-pub-2412389118068551~3993613618</string>
     <string name="banner_ad_unit_id">ca-app-pub-2412389118068551/2281803044</string>
     <string name="Interstitial_ad_unit_id">ca-app-pub-2412389118068551/8160987123</string>
 
     <string name="banner_ad_unit_id_for_test">ca-app-pub-3940256099942544/6300978111</string>
     <string name="Interstitial_ad_unit_id_for_test">ca-app-pub-3940256099942544/1033173712</string>
-    <string name="app_id_for_test">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="admob_app_id_for_test">ca-app-pub-3940256099942544~3347511713</string>
 
 </resources>
