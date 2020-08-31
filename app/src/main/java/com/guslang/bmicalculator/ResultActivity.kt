@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.activity_result.*
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.startActivity
 import java.math.BigDecimal
+import kotlin.math.pow
 
 class ResultActivity : AppCompatActivity() {
     lateinit var mAdView : AdView
@@ -35,11 +36,11 @@ class ResultActivity : AppCompatActivity() {
         //end
 
         // 전달받은 키와 몸무게
-        val height = intent.getStringExtra("height").toString().toInt()
-        val weight = intent.getStringExtra("weight").toString().toInt()
+        val height = intent.getStringExtra("height").toString().toDouble()
+        val weight = intent.getStringExtra("weight").toString().toDouble()
 
         // BMI 계산
-        val bmi = weight / Math.pow(height / 100.0, 2.0)
+        val bmi = weight / (height / 100.0).pow(2.0)
 
         // 결과 표시
         when {
