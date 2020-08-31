@@ -2,6 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
+// Apply the Crashlytics Gradle plugin
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdkVersion 30
@@ -10,9 +12,9 @@ android {
     defaultConfig {
         applicationId "com.guslang.bmicalculator"
         minSdkVersion 16
-        targetSdkVersion 29
-        versionCode 7
-        versionName "1.6"
+        targetSdkVersion 30
+        versionCode 8
+        versionName "1.7"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
@@ -36,6 +38,10 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.0'
     testImplementation 'junit:junit:4.12'
     implementation "org.jetbrains.anko:anko:$anko_version"
+    // Recommended: Add the Firebase SDK for Google Analytics.
+    implementation 'com.google.firebase:firebase-analytics-ktx:17.5.0'
+    // Add the Firebase Crashlytics SDK.
+    implementation 'com.google.firebase:firebase-crashlytics:17.2.1'
 
 //     Google Admob
 //    implementation 'com.google.firebase:firebase-analytics:17.2.2'
