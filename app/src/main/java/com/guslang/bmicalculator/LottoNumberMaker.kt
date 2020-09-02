@@ -1,4 +1,4 @@
-package com.akj.lotto
+package com.guslang.bmicalculator
 
 import java.text.SimpleDateFormat
 import java.util.*

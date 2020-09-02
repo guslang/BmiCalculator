@@ -3,7 +3,6 @@ package com.guslang.bmicalculator
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.akj.lotto.LottoNumberMaker
 import com.google.android.gms.ads.*
 import kotlinx.android.synthetic.main.activity_result.*
 import org.jetbrains.anko.longToast
@@ -25,9 +24,13 @@ class ResultActivity : AppCompatActivity() {
 //        MobileAds.initialize(this)
 
         //firebase-admob 배너
-        mAdView = findViewById(R.id.adView)
-        val adRequest = AdRequest.Builder().build()
-        mAdView.loadAd(adRequest)
+        try {
+            mAdView = findViewById(R.id.adView)
+            val adRequest = AdRequest.Builder().build()
+            mAdView.loadAd(adRequest)
+        }catch (e:Exception){
+            Log.d("admob", "The adMob banner wasn't loaded yet. ${e.toString()}")
+        }
 
         //firebase-admob 전면 광고
         mInterstitialAd = InterstitialAd(this)

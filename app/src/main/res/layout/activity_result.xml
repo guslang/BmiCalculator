@@ -9,15 +9,15 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:gravity="center_horizontal"
-    android:weightSum="6"
+    android:weightSum="5"
     tools:context=".ResultActivity">
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:gravity="center_vertical|center_horizontal"
-        android:text="Get Lucky \u0026 Health!"
+        android:text="Good Luck \u0026 Health!"
         android:autoSizeTextType="uniform"
         android:fontFamily="@font/baloo_thambi"
         android:textColor="@android:color/white"
@@ -29,12 +29,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="306dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
         android:background="@drawable/radius1"
-        android:layout_weight="3.5"
+        android:layout_weight="1.5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -54,7 +52,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@android:color/white"
-            android:textSize="36dp"
+            android:textSize="32dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -70,7 +68,7 @@
             android:layout_marginTop="16dp"
             android:text="00.00"
             android:textColor="@android:color/white"
-            android:textSize="54dp"
+            android:textSize="44dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -83,7 +81,7 @@
             android:layout_marginTop="16dp"
             android:gravity="center_horizontal"
             android:textColor="@android:color/white"
-            android:textSize="18dp"
+            android:textSize="20dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.493"
@@ -94,11 +92,10 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="90dp"
         android:layout_weight="1"
         android:orientation="horizontal"
-        android:gravity="center_horizontal"
-        android:layout_marginBottom="16dp" >
+        android:gravity="center_horizontal"        >
 
         <ImageView
             android:id="@+id/imageView01"
@@ -177,52 +174,29 @@
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
             app:srcCompat="@drawable/ball_32" />
-
     </LinearLayout>
-
-
 
     <Button
         android:id="@+id/btnRecalc"
         android:layout_width="match_parent"
-        android:layout_height="62dp"
+        android:layout_height="wrap_content"
         android:background="#CD4141"
-        android:layout_marginBottom="16dp"
-        android:text="Re-Calculate"
         android:layout_weight="1"
+        android:text="Re-Calculate"
         android:textColor="@android:color/background_light"
         android:textColorHint="@android:color/darker_gray"
-        android:textSize="24sp"/>
+        android:textSize="28dp"
+         />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        ads:adSize="SMART_BANNER"
         android:layout_weight="1"
-        android:layout_gravity="center_horizontal|center_vertical"
-        android:background="@drawable/radius1"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_weight="1"
-        tools:layout_editor_absoluteY="327dp">
-
-        <com.google.android.gms.ads.AdView
-            android:id="@+id/adView"
-            android:layout_width="320dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginRight="4dp"
-            android:layout_marginBottom="4dp"
-            app:adSize="BANNER"
-            app:adUnitId="@string/banner_ad_unit_id"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:adUnitId="@string/banner_ad_unit_id">
+    </com.google.android.gms.ads.AdView>
 
 
 </LinearLayout>

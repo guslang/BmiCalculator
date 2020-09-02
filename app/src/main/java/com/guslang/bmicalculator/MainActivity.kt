@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var mAdView : AdView
     private lateinit var mInterstitialAd: InterstitialAd
-//    lateinit var field: EditText
+    val lottoImageStartId = R.drawable.ball_01
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,9 +34,13 @@ class MainActivity : AppCompatActivity() {
         //firebase-admob 초기화
         MobileAds.initialize(this, getString(R.string.admob_app_id))
         //firebase-admob 배너
-        mAdView = findViewById(R.id.adView)
-        val adRequest = AdRequest.Builder().build()
-        mAdView.loadAd(adRequest)
+        try {
+            mAdView = findViewById(R.id.adView)
+            val adRequest = AdRequest.Builder().build()
+            mAdView.loadAd(adRequest)
+        } catch (e:Exception){
+            Log.d("admob", "The adMob banner wasn't loaded yet. ${e.toString()}")
+        }
 
         //firebase-admob 전면 광고
         mInterstitialAd = InterstitialAd(this)
@@ -62,6 +66,9 @@ class MainActivity : AppCompatActivity() {
             } else
                 false
         }
+        // 로또 번호 랜덤 추출 6개
+        val result:List<Int> = ArrayList(LottoNumberMaker.getShuffleLottoNumbers())
+        updateLottoBallImage(result.sortedBy { it })
 
         mInterstitialAd.adListener = object: AdListener() {
             override fun onAdLoaded() {
@@ -133,24 +140,45 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadData () {
-        val pref: SharedPreferences = getSharedPreferences("dico", MODE_PRIVATE)
-        val height = pref.getString("KEY_HEIGHT", "0") ?: "0"
-        val weight = pref.getString("KEY_WEIGHT", "0") ?: "0"
+        try {
+            val pref: SharedPreferences = getSharedPreferences("hwData", MODE_PRIVATE)
+            val height = pref.getString("KEY_HEIGHT", "0")
+            val weight = pref.getString("KEY_WEIGHT", "0")
 
-//        if (height != 0 && weight != 0) {
-        heightEditText.setText(height)
-        weightEditText.setText(weight)
-
-//        }
+            if (height != "0" && weight != "0") {
+                heightEditText.setText(height)
+                weightEditText.setText(weight)
+            }
+        } catch (e: ClassCastException){
+            Log.d("loadData", "ClassCastException : $e")
+        }
     }
-//
+
     private fun saveData(height: String, weight: String) {
-        val pref: SharedPreferences = getSharedPreferences("dico", MODE_PRIVATE)
+        val pref: SharedPreferences = getSharedPreferences("hwData", MODE_PRIVATE)
         val editor = pref.edit()
 
         editor.putString("KEY_HEIGHT", height)
               .putString("KEY_WEIGHT", weight)
               .apply()
+    }
+
+    /**
+     * 결과에 따라 로또 공 이미지를 업데이트한다.
+     */
+    fun updateLottoBallImage(result: List<Int>) {
+        // 결과의 사이즈가 6개 미만인경우 에러가 발생할 수 있으므로 바로 리턴한다.
+        if (result.size < 6) return
+
+        // ball_01 이미지 부터 순서대로 이미지 아이디가 있기 때문에
+        // ball_01 아이디에 결과값 -1 을 하면 목표하는 이미지가 된다
+        // ex) result[0] 이 2번 공인 경우 ball_01 에서 하나뒤에 이미지가 된다.
+        imageView01.setImageResource(lottoImageStartId + (result[0] - 1))
+        imageView02.setImageResource(lottoImageStartId + (result[1] - 1))
+        imageView03.setImageResource(lottoImageStartId + (result[2] - 1))
+        imageView04.setImageResource(lottoImageStartId + (result[3] - 1))
+        imageView05.setImageResource(lottoImageStartId + (result[4] - 1))
+        imageView06.setImageResource(lottoImageStartId + (result[5] - 1))
     }
 }
 
