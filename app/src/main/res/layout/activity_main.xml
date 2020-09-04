@@ -43,6 +43,7 @@
         android:layout_weight="1"
         android:orientation="horizontal"
         android:gravity="center_horizontal"
+        android:background="@drawable/radius2"
         android:layout_marginBottom="4dp" >
 
         <ImageView
@@ -130,9 +131,9 @@
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:layout_marginTop="4dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:layout_weight="1"
-        android:background="@drawable/radius1"
+        android:background="@drawable/radius3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -146,19 +147,19 @@
             android:fontFamily="@font/chelsea_market"
             android:text="Height"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.2" />
+            app:layout_constraintVertical_bias="0.10" />
 
         <EditText
             android:id="@+id/heightEditText"
             style="@android:style/Widget.AutoCompleteTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
+            android:background="@drawable/radius1"
             android:fontFamily="monospace"
             android:gravity="center_vertical"
             android:hint="0"
@@ -188,7 +189,7 @@
             android:background="@android:color/transparent"
             android:inputType="textPersonName"
             android:text="cm"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="@android:color/white"
             android:textSize="24dp"
             app:layout_constraintBottom_toBottomOf="@+id/heightEditText"
             app:layout_constraintStart_toEndOf="@+id/heightEditText" />
@@ -197,9 +198,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:layout_weight="1"
-        android:background="@drawable/radius1"
+        android:background="@drawable/radius3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintVertical_weight="1">
@@ -208,7 +209,7 @@
             android:id="@+id/weightEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
+            android:background="@drawable/radius1"
             android:fontFamily="monospace"
             android:hint="0"
             android:inputType="numberDecimal"
@@ -232,8 +233,8 @@
             android:fontFamily="@font/chelsea_market"
             android:text="Weight"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@android:color/darker_gray"
-            app:layout_constraintVertical_bias="0.2"
+            android:textColor="@android:color/white"
+            app:layout_constraintVertical_bias="0.1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -248,7 +249,7 @@
             app:layout_constraintVertical_bias="0.2"
             android:inputType="textPersonName"
             android:text="kg"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="@android:color/white"
             android:textSize="24dp"
             android:layout_marginLeft="8dp"
             android:layout_marginBottom="8dp"
