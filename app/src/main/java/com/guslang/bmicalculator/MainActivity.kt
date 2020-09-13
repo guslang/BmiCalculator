@@ -109,11 +109,11 @@ class MainActivity : AppCompatActivity() {
 //            longToast("뒤로가기 버튼을 한번 더 누르면 종료됩니다.")
         } else {
             // admob 전면 광고
-            if (mInterstitialAd.isLoaded) {
-                mInterstitialAd.show()
-            } else {
-                Log.d("TAG", "The interstitial wasn't loaded yet.")
-            }
+//            if (mInterstitialAd.isLoaded) {
+//                mInterstitialAd.show()
+//            } else {
+//                Log.d("TAG", "The interstitial wasn't loaded yet.")
+//            }
             finish() //액티비티 종료
         }
     }

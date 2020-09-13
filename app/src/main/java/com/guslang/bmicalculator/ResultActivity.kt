@@ -47,22 +47,11 @@ class ResultActivity : AppCompatActivity() {
 
         // 결과 표시
         when {
-            bmi >= 35 -> {
-                resultTextView.text = "OBESITY Class 3"  //3단계 비만 고도 비만
-                commentTextView.text = "You are heavily overweight. Try to exercise more and diet"
-                //비만 3단계입니다. 운동과 식단조절을 병행하세요.
-            }
             bmi >= 30 -> {
-                resultTextView.text = "OBESITY Class 2"  //2단계 비만
-                commentTextView.text = "You are heavily overweight. Try to exercise more and diet"
-                //비만 2단계입니다. 운동과 식단조절을 병행하세요.
+                resultTextView.text = "OBESITY"  //비만
+                commentTextView.text ="You are heavily overweight. Try to exercise more and diet"
             }
             bmi >= 25 -> {
-                resultTextView.text = "OBESITY Class 1"  //1단계 비만
-                commentTextView.text ="You are heavily overweight. Try to exercise more and diet"
-                //비만 3단계입니다. 운동과 식단조절을 병행하세요.
-            }
-            bmi >= 23 -> {
                 resultTextView.text = "OVERWEIGHT" //과체중
                 commentTextView.text = "You have a higher than normal body weight. Try to exercise more."
                 //과체중입니다. 하루 1만보 걸어보는건 어떨까요?
@@ -81,7 +70,7 @@ class ResultActivity : AppCompatActivity() {
 
         // 이미지 표시
         when {
-            bmi >=23 ->
+            bmi >=25 ->
                 imageView.setImageResource(
                     R.drawable.ic_baseline_sentiment_very_dissatisfied_24
                 )
