@@ -1,9 +1,11 @@
 package com.guslang.bmicalculator
 
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.ads.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -66,6 +68,17 @@ class MainActivity : AppCompatActivity() {
             } else
                 false
         }
+
+        weightEditText.setOnEditorActionListener { textView, i, keyEvent ->
+            if ( i == EditorInfo.IME_ACTION_NEXT || i == EditorInfo.IME_ACTION_DONE) {
+                //resultButton.requestFocus()
+                closeKeyboard()
+                loadResult()
+                true
+            } else
+                false
+        }
+
         // 로또 번호 랜덤 추출 6개
         val result:List<Int> = ArrayList(LottoNumberMaker.getShuffleLottoNumbers())
         updateLottoBallImage(result.sortedBy { it })
@@ -96,6 +109,16 @@ class MainActivity : AppCompatActivity() {
                 // Code to be executed when the interstitial ad is closed.
                 mInterstitialAd.loadAd(AdRequest.Builder().build())
             }
+        }
+    }
+
+    private fun closeKeyboard() {
+        var view = this.currentFocus
+
+        if (view != null)
+        {
+            val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(view.windowToken,0)
         }
     }
 
