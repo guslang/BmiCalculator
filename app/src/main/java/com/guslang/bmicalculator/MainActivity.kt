@@ -4,31 +4,103 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.ads.*
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
-import java.text.DecimalFormat
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var mAdView : AdView
     private lateinit var mInterstitialAd: InterstitialAd
     val lottoImageStartId = R.drawable.ball_01
+    lateinit var mHeightVal : String
+    lateinit var mWeightVal : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 키/몸무게 포멧
-        val format = DecimalFormat("###.##")
-        val formatted: String = format.format(0.0)
-        heightEditText.setText(formatted)
-        weightEditText.setText(formatted)
+        val initHeightTranslationY = tvHeight.translationY
+        val initWeightTranslationY = tvWeight.translationY
+        val initHeightTranslationX = tvHeight.translationX
+        sbHeight.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                mHeightVal = progress.toString()
+                tvHeight.text = "Height : " + mHeightVal + "cm"
+                //animation
+//                val translationDistance = (initHeightTranslationX
+//                        + progress * resources.getDimension(R.dimen.text_anim_step) *  -1)
+//                tvHeight.animate().translationX(translationDistance)
+//
+//                if(!fromUser) {
+//                    tvHeight.animate().setDuration(500).rotationBy(360f).translationX(initHeightTranslationX)
+//                }
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+            }
+        })
+
+        //
+        sbWeight.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                mWeightVal = progress.toString()
+                tvWeight.text = "Weight : " + mWeightVal + "kg"
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+
+            }
+
+        })
+
+        // 키 1씩 조정
+        ivHLeftArrow.setOnClickListener {
+            var tmpVal:Int = sbHeight.progress - 1
+            if (tmpVal < 90)
+                tmpVal = 90
+            sbHeight.progress = tmpVal
+        }
+
+        ivHRightArrow.setOnClickListener {
+            var tmpVal:Int = sbHeight.progress +1
+            if (tmpVal > 210)
+                tmpVal = 210
+            sbHeight.progress = tmpVal
+        }
+
+        ivWLeftArrow.setOnClickListener {
+            var tmpVal:Int = sbWeight.progress - 1
+            if (tmpVal < 10)
+                tmpVal = 10
+            sbWeight.progress = tmpVal
+        }
+
+        ivWRightArrow.setOnClickListener {
+            var tmpVal:Int = sbWeight.progress + 1
+            if (tmpVal > 150)
+                tmpVal = 150
+            sbWeight.progress = tmpVal
+        }
+
+
+//
+//        // 키/몸무게 포멧
+//        val format = DecimalFormat("###.##")
+//        val formatted: String = format.format(0.0)
+//        heightEditText.setText(formatted)
+//        weightEditText.setText(formatted)
 
         //admob 초기화
         //MobileAds.initialize(this) {}
@@ -60,24 +132,24 @@ class MainActivity : AppCompatActivity() {
         }
 
         // 키 입력 후 몸무게 필드로 포커스 이동
-        heightEditText.setOnEditorActionListener { textView, i, keyEvent ->
-            if (i == EditorInfo.IME_ACTION_DONE) {
-                weightEditText.requestFocus()
-//                weightEditText.selectAll()
-                true
-            } else
-                false
-        }
-
-        weightEditText.setOnEditorActionListener { textView, i, keyEvent ->
-            if ( i == EditorInfo.IME_ACTION_NEXT || i == EditorInfo.IME_ACTION_DONE) {
-                //resultButton.requestFocus()
-                closeKeyboard()
-                loadResult()
-                true
-            } else
-                false
-        }
+//        heightEditText.setOnEditorActionListener { textView, i, keyEvent ->
+//            if (i == EditorInfo.IME_ACTION_DONE) {
+//                weightEditText.requestFocus()
+////                weightEditText.selectAll()
+//                true
+//            } else
+//                false
+//        }
+//
+//        weightEditText.setOnEditorActionListener { textView, i, keyEvent ->
+//            if ( i == EditorInfo.IME_ACTION_NEXT || i == EditorInfo.IME_ACTION_DONE) {
+//                //resultButton.requestFocus()
+//                closeKeyboard()
+//                loadResult()
+//                true
+//            } else
+//                false
+//        }
 
         // 로또 번호 랜덤 추출 6개
         val result:List<Int> = ArrayList(LottoNumberMaker.getShuffleLottoNumbers())
@@ -142,12 +214,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadResult() {
-        var heightval:String? = heightEditText.text.toString()
+        var heightval:String? = mHeightVal //heightEditText.text.toString()
         heightval = heightval ?:"0"
         if (heightval.isEmpty())  heightval = "0"
         if (heightval.toDouble() <= 0L)
             longToast("Enter your height")
-        var weightval:String? = weightEditText.text.toString()
+        var weightval:String? = mWeightVal //weightEditText.text.toString()
         weightval = weightval ?:"0"
         if (weightval.isEmpty()) weightval = "0"
         if (weightval.toDouble() <= 0L)
@@ -168,10 +240,12 @@ class MainActivity : AppCompatActivity() {
             val height = pref.getString("KEY_HEIGHT", "0")
             val weight = pref.getString("KEY_WEIGHT", "0")
 
-            if (height != "0" && weight != "0") {
-                heightEditText.setText(height)
-                weightEditText.setText(weight)
-            }
+            sbHeight.progress = height?.toInt() ?: 0
+            sbWeight.progress = weight?.toInt() ?: 0
+
+            tvHeight.text = "Height : " + sbHeight.progress.toString() + "cm"
+            tvWeight.text = "Weight : " + sbWeight.progress.toString() + "kg"
+
         } catch (e: ClassCastException){
             Log.d("loadData", "ClassCastException : $e")
         }

@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     android:background="@android:color/background_dark"
     android:orientation="vertical"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
+    android:paddingLeft="4dp"
+    android:paddingRight="4dp"
     android:weightSum="5"
     tools:context=".MainActivity">
 
@@ -130,7 +130,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="91dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
         android:layout_weight="1"
@@ -142,63 +142,60 @@
 
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/tvHeight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/chelsea_market"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/alfa_slab_one"
             android:text="Height"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.10" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/heightEditText"
-            style="@android:style/Widget.AutoCompleteTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/radius1"
-            android:fontFamily="monospace"
-            android:gravity="center_vertical"
-            android:hint="0"
-            android:imeOptions="actionDone"
-            android:inputType="numberDecimal"
-            android:maxLength="6"
-            android:selectAllOnFocus="true"
-            android:textAlignment="viewEnd"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white"
-            android:textSize="44dp"
-            android:textStyle="bold"
-            android:typeface="monospace"
-            android:visibility="visible"
+        <ImageView
+            android:id="@+id/ivHLeftArrow"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.7" />
+            app:layout_constraintVertical_bias="0.625"
+            app:srcCompat="@drawable/ic_baseline_navigate_before_24" />
 
-        <TextView
-            android:id="@+id/editTextTextPersonName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="@android:color/transparent"
-            android:inputType="textPersonName"
-            android:text="cm"
-            android:textColor="@android:color/white"
-            android:textSize="24dp"
-            app:layout_constraintBottom_toBottomOf="@+id/heightEditText"
-            app:layout_constraintStart_toEndOf="@+id/heightEditText" />
+        <SeekBar
+            android:id="@+id/sbHeight"
+            style="@android:style/Widget.Holo.SeekBar"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:max="210"
+            android:min="90"
+            android:progress="150"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ivHRightArrow"
+            app:layout_constraintStart_toEndOf="@+id/ivHLeftArrow"
+            app:layout_constraintTop_toBottomOf="@+id/tvHeight"
+            app:layout_constraintVertical_bias="0.2" />
+
+        <ImageView
+            android:id="@+id/ivHRightArrow"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.625"
+            app:srcCompat="@drawable/ic_baseline_navigate_next_24" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="91dp"
         android:layout_marginBottom="4dp"
         android:layout_weight="1"
         android:background="@drawable/radius1"
@@ -206,56 +203,52 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintVertical_weight="1">
 
-        <EditText
-            android:id="@+id/weightEditText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/radius1"
-            android:fontFamily="monospace"
-            android:hint="0"
-            android:inputType="numberDecimal"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white"
-            android:textSize="44dp"
-            android:selectAllOnFocus="true"
-            android:textStyle="bold"
-            android:typeface="monospace"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.7"/>
-
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/tvWeight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/chelsea_market"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/alfa_slab_one"
             android:text="Weight"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@android:color/white"
-            app:layout_constraintVertical_bias="0.1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/editTextTextKg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:gravity="bottom"
-            app:layout_constraintVertical_bias="0.2"
-            android:inputType="textPersonName"
-            android:text="kg"
-            android:textColor="@android:color/white"
-            android:textSize="24dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/weightEditText"
-            app:layout_constraintStart_toEndOf="@+id/weightEditText" />
+        <ImageView
+            android:id="@+id/ivWLeftArrow"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:layout_constraintVertical_bias="0.625"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_navigate_before_24" />
+
+        <SeekBar
+            android:id="@+id/sbWeight"
+            style="@android:style/Widget.Holo.SeekBar"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:max="150"
+            android:min="10"
+            android:progress="80"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ivWRightArrow"
+            app:layout_constraintStart_toEndOf="@+id/ivWLeftArrow"
+            app:layout_constraintTop_toBottomOf="@+id/tvWeight"
+            app:layout_constraintVertical_bias="0.2" />
+
+        <ImageView
+            android:id="@+id/ivWRightArrow"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:layout_constraintVertical_bias="0.625"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_navigate_next_24" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
