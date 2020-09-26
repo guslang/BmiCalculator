@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@android:color/background_dark"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
+    android:paddingLeft="4dp"
+    android:paddingRight="4dp"
     android:gravity="center_horizontal"
     android:weightSum="5"
     tools:context=".ResultActivity">
@@ -93,7 +93,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="90dp"
-        android:layout_weight="1"
+        android:layout_weight="0"
         android:orientation="horizontal"
         android:gravity="center_horizontal"        >
 

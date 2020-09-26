@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.ads.*
 import kotlinx.android.synthetic.main.activity_result.*
-import org.jetbrains.anko.longToast
 import org.jetbrains.anko.startActivity
 import java.math.BigDecimal
 import kotlin.math.pow
@@ -13,7 +12,7 @@ import kotlin.math.pow
 class ResultActivity : AppCompatActivity() {
     lateinit var mAdView : AdView
     private lateinit var mInterstitialAd: InterstitialAd
-    val lottoImageStartId = R.drawable.ball_01
+    private val lottoImageStartId = R.drawable.ball_01
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,8 +20,6 @@ class ResultActivity : AppCompatActivity() {
 
         //firebase-admob 초기화
         MobileAds.initialize(this,getString(R.string.admob_app_id))
-//        MobileAds.initialize(this)
-
         //firebase-admob 배너
         try {
             mAdView = findViewById(R.id.adView)
@@ -32,11 +29,9 @@ class ResultActivity : AppCompatActivity() {
             Log.d("admob", "The adMob banner wasn't loaded yet. ${e.toString()}")
         }
 
-        //firebase-admob 전면 광고
         mInterstitialAd = InterstitialAd(this)
         mInterstitialAd.adUnitId = getString(R.string.Interstitial_ad_unit_id)
         mInterstitialAd.loadAd(AdRequest.Builder().build())
-        //end
 
         // 전달받은 키와 몸무게
         val height = intent.getStringExtra("height").toString().toDouble()
@@ -83,7 +78,7 @@ class ResultActivity : AppCompatActivity() {
                     R.drawable.ic_baseline_sentiment_dissatisfied_24)
         }
 
-        longToast("$bmi")
+//        longToast("$bmi")
         txtResult.text = bmi.toString().toBigDecimal().setScale(2,BigDecimal.ROUND_HALF_UP).toString()
 
         btnRecalc.setOnClickListener {
@@ -147,7 +142,7 @@ class ResultActivity : AppCompatActivity() {
     /**
      * 전면 광고 게재하기
      */
-    fun showInterstitialAd() {
+    private fun showInterstitialAd() {
         // admob 전면 광고
         if (mInterstitialAd.isLoaded) {
             mInterstitialAd.show()

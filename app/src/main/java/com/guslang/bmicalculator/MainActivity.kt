@@ -1,23 +1,23 @@
 package com.guslang.bmicalculator
 
-import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import android.view.inputmethod.InputMethodManager
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.ads.*
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.longToast
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
+import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var mAdView : AdView
-    private lateinit var mInterstitialAd: InterstitialAd
-    val lottoImageStartId = R.drawable.ball_01
+    private val lottoImageStartId = R.drawable.ball_01
     lateinit var mHeightVal : String
     lateinit var mWeightVal : String
 
@@ -25,9 +25,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val initHeightTranslationY = tvHeight.translationY
-        val initWeightTranslationY = tvWeight.translationY
-        val initHeightTranslationX = tvHeight.translationX
+//        val initHeightTranslationY = tvHeight.translationY
+//        val initWeightTranslationY = tvWeight.translationY
+//        val initHeightTranslationX = tvHeight.translationX
         sbHeight.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 mHeightVal = progress.toString()
@@ -94,19 +94,8 @@ class MainActivity : AppCompatActivity() {
             sbWeight.progress = tmpVal
         }
 
-
-//
-//        // 키/몸무게 포멧
-//        val format = DecimalFormat("###.##")
-//        val formatted: String = format.format(0.0)
-//        heightEditText.setText(formatted)
-//        weightEditText.setText(formatted)
-
-        //admob 초기화
-        //MobileAds.initialize(this) {}
-
         //firebase-admob 초기화
-        MobileAds.initialize(this, getString(R.string.admob_app_id))
+        MobileAds.initialize(this,getString(R.string.admob_app_id))
         //firebase-admob 배너
         try {
             mAdView = findViewById(R.id.adView)
@@ -116,82 +105,49 @@ class MainActivity : AppCompatActivity() {
             Log.d("admob", "The adMob banner wasn't loaded yet. ${e.toString()}")
         }
 
-        //firebase-admob 전면 광고
-        mInterstitialAd = InterstitialAd(this)
-        mInterstitialAd.adUnitId = getString(R.string.Interstitial_ad_unit_id)
-        mInterstitialAd.loadAd(AdRequest.Builder().build())
-        //end
+        mAdView.adListener = object: AdListener() {
+            override fun onAdLoaded() {
+                // Code to be executed when an ad finishes loading.
+                Log.d("admob", "The adMob banner onAdLoaded.")
+            }
 
+            override fun onAdFailedToLoad(p0: Int) {
+                // Code to be executed when an ad request fails.
+                Log.d("admob", "The adMob banner onAdFailedToLoad. ${p0.toString()}")
+            }
+
+            override fun onAdOpened() {
+                // Code to be executed when an ad opens an overlay that
+                // covers the screen.
+                Log.d("admob", "The adMob banner onAdOpened.")
+            }
+
+            override fun onAdClicked() {
+                // Code to be executed when the user clicks on an ad.
+                Log.d("admob", "The adMob banner onAdClicked.")
+            }
+
+            override fun onAdLeftApplication() {
+                // Code to be executed when the user has left the app.\
+                Log.d("admob", "The adMob banner onAdLeftApplication.")
+            }
+
+            override fun onAdClosed() {
+                // Code to be executed when the user is about to return
+                // to the app after tapping on an ad.
+                Log.d("admob", "The adMob banner onAdClosed.")
+            }
+        }
         // 이전에 입력한 값을 읽어오기
         loadData()
-//        field = findViewById(R.id.heightEditText) as EditText
-
         // BMI 계산
         resultButton.setOnClickListener {
             loadResult()
         }
 
-        // 키 입력 후 몸무게 필드로 포커스 이동
-//        heightEditText.setOnEditorActionListener { textView, i, keyEvent ->
-//            if (i == EditorInfo.IME_ACTION_DONE) {
-//                weightEditText.requestFocus()
-////                weightEditText.selectAll()
-//                true
-//            } else
-//                false
-//        }
-//
-//        weightEditText.setOnEditorActionListener { textView, i, keyEvent ->
-//            if ( i == EditorInfo.IME_ACTION_NEXT || i == EditorInfo.IME_ACTION_DONE) {
-//                //resultButton.requestFocus()
-//                closeKeyboard()
-//                loadResult()
-//                true
-//            } else
-//                false
-//        }
-
         // 로또 번호 랜덤 추출 6개
         val result:List<Int> = ArrayList(LottoNumberMaker.getShuffleLottoNumbers())
         updateLottoBallImage(result.sortedBy { it })
-
-        mInterstitialAd.adListener = object: AdListener() {
-            override fun onAdLoaded() {
-                // Code to be executed when an ad finishes loading.
-            }
-
-            override fun onAdFailedToLoad(errorCode: Int) {
-                // Code to be executed when an ad request fails.
-                Log.d("TAG", "The interstitial wasn't loaded yet. $errorCode")
-            }
-
-            override fun onAdOpened() {
-                // Code to be executed when the ad is displayed.
-            }
-
-            override fun onAdClicked() {
-                // Code to be executed when the user clicks on an ad.
-            }
-
-            override fun onAdLeftApplication() {
-                // Code to be executed when the user has left the app.
-            }
-
-            override fun onAdClosed() {
-                // Code to be executed when the interstitial ad is closed.
-                mInterstitialAd.loadAd(AdRequest.Builder().build())
-            }
-        }
-    }
-
-    private fun closeKeyboard() {
-        var view = this.currentFocus
-
-        if (view != null)
-        {
-            val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.hideSoftInputFromWindow(view.windowToken,0)
-        }
     }
 
     //뒤로가기 연속 클릭 대기 시간
@@ -201,37 +157,22 @@ class MainActivity : AppCompatActivity() {
         if(System.currentTimeMillis() - mBackWait >=2000 ) {
             mBackWait = System.currentTimeMillis()
             toast("뒤로가기 버튼을 한번 더 누르면 종료됩니다.")
-//            longToast("뒤로가기 버튼을 한번 더 누르면 종료됩니다.")
         } else {
-            // admob 전면 광고
-//            if (mInterstitialAd.isLoaded) {
-//                mInterstitialAd.show()
-//            } else {
-//                Log.d("TAG", "The interstitial wasn't loaded yet.")
-//            }
-            finish() //액티비티 종료
+//            finish() //액티비티 종료
+            finishAffinity()        //해당 앱의 루트 액티비티를 종료시킨다. (API  16미만은 ActivityCompat.finishAffinity())
+            System.runFinalization() //현재 작업중인 쓰레드가 다 종료되면, 종료 시키라는 명령어이다.
+            exitProcess(0)    // 현재 액티비티를 종료시킨다.
         }
     }
 
     private fun loadResult() {
-        var heightval:String? = mHeightVal //heightEditText.text.toString()
-        heightval = heightval ?:"0"
-        if (heightval.isEmpty())  heightval = "0"
-        if (heightval.toDouble() <= 0L)
-            longToast("Enter your height")
-        var weightval:String? = mWeightVal //weightEditText.text.toString()
-        weightval = weightval ?:"0"
-        if (weightval.isEmpty()) weightval = "0"
-        if (weightval.toDouble() <= 0L)
-            longToast("Enter your height")
-
-        if (heightval.toDouble() > 0 && weightval.toDouble() > 0 ){
-            startActivity<ResultActivity>(
-                "weight" to weightval,//weightEditText.text.toString(),
-                "height" to heightval //heightEditText.text.toString()
-            )
-            saveData(heightval, weightval)
-        }
+        var heightval:String = mHeightVal
+        var weightval:String = mWeightVal
+        startActivity<ResultActivity>(
+               "weight" to weightval,
+               "height" to heightval
+        )
+        saveData(heightval, weightval)
     }
 
     private fun loadData () {
@@ -240,14 +181,16 @@ class MainActivity : AppCompatActivity() {
             val height = pref.getString("KEY_HEIGHT", "0")
             val weight = pref.getString("KEY_WEIGHT", "0")
 
-            sbHeight.progress = height?.toInt() ?: 0
-            sbWeight.progress = weight?.toInt() ?: 0
+            sbHeight.progress = Integer.parseInt(height?:"0")
+            sbWeight.progress = Integer.parseInt(weight?:"0")
 
             tvHeight.text = "Height : " + sbHeight.progress.toString() + "cm"
             tvWeight.text = "Weight : " + sbWeight.progress.toString() + "kg"
 
         } catch (e: ClassCastException){
             Log.d("loadData", "ClassCastException : $e")
+        } catch (e: NumberFormatException){
+            Log.d("loadData", "NumberFormatException : $e")
         }
     }
 
@@ -263,7 +206,7 @@ class MainActivity : AppCompatActivity() {
     /**
      * 결과에 따라 로또 공 이미지를 업데이트한다.
      */
-    fun updateLottoBallImage(result: List<Int>) {
+    private fun updateLottoBallImage(result: List<Int>) {
         // 결과의 사이즈가 6개 미만인경우 에러가 발생할 수 있으므로 바로 리턴한다.
         if (result.size < 6) return
 
